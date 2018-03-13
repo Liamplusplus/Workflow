@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Workflow - initcpp
+
+compilers="gcc mingw32 mingw64"
+
+targets="linux w64 win32"
+makefile="$WORKFLOW/config/templates/makefile"
+
+if (( $# < 1)); then
+	printf "${0##*/}: <name> ; Initialise C++ project titled <name>\n"
+elif [ "$1" = "help" ]; then
+	printf "${0##*/}: <name> ; Initialise C++ project titled <name>\n"
+else
+	root="./$1"
+	if [ -d $root ]; then
+		printf "$1 already exists"
+	else
+
+		mkdir $1
+
+		mkdir $1/bin
+		mkdir $1/lib
+		mkdir $1/log
+		for cxx in $compilers;
+		do
+			mkdir "$1/bin/$cxx"
+			mkdir "$1/bin/$cxx/test"
+			mkdir "$1/lib/$cxx"
+		done
+
+		mkdir $1/release
+		for target in $targets;
+		do
+			mkdir "$1/release/"$1"-$target"
+		done
+
+		mkdir $1/doc
+		mkdir $1/src
+		mkdir "$1/src/test"
+		mkdir "$1/src/main"
+		cp $makefile $1/makefile
+	fi
+fi

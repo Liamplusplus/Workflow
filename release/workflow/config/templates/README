@@ -1,0 +1,14 @@
+This is a standard workflow project. This software was designed as a component to a Minimalist Development Environment.
+
+Workflow provides a cross-platform abstraction for the tedious, repetitive parts of programming; compilers, project organisation,
+target CPUs etcetera.
+
+To get started, open up the makefile in your favourite text editor and pay attention to just the 'User Config' section. This is where
+you enter the basic information about your project.
+
+	MAIN := [The name of your project]
+	BRANCHES := [Each branch made with the branch script should be here in a space-seperated list]
+	LIBRARIES := [Space seperated list of used libraries. Makefile will search $WORKFLOW_LIB for this directory if on a Linux machine]
+	LIBFILES := [Space seperated list of library files used in linking. Example: -lomega to link to shared libomega.[so/dll] or static libomega.a]
+
+That is about all on compiling projects using the generated makefile, aliases have also been provided for easier make interaction, happy programming.

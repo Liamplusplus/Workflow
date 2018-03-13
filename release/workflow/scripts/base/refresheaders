@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# PSEUDO
+# Delete ./include/${PWD##*/}
+# Delete 
+
+interface="$WORKFLOW/include/${PWD##*/}"
+incdest="./include/${PWD##*/}"
+
+printf "Refreshing interface for ${PWD##*/}"
+
+rm -r $interface
+rm -r $incdest
+
+copyheaders
+

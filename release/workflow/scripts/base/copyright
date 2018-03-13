@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Workflow - copyright
+
+
+file="$WORKFLOW/config/.copyright"
+off=""$file"off"
+
+if (( $# < 1)); then
+	printf "\ncopyright <name>/<on/off>\n\n"
+elif [ "$1" = "on" ]; then
+	if [ -f $off ]; then
+		printf "\nenabling copyright\n\n"
+		mv $off $file
+	else
+		printf "\ncopyright already enabled\n\n"
+	fi
+elif [ "$1" = "off" ]; then
+		printf "\ndisabling copyright\n\n"
+		mv $file $off
+else
+	printf "\nConfiguring automatic copyright for $1\n\n"
+	echo "$1" > $file
+fi
+
+

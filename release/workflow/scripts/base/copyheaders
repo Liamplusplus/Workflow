@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Workflow - initcpp
+# Note this function is recursive! Only run in project directory
+
+#PSEUDO
+# Create include/$MAIN if not existing
+# Check if src/file is directory
+#		If it is, run function recursively 
+#		Else if extension = .hpp, copy to include/$MAIN
+	
+printf "Performing recursive copy of all project headers for ${PWD##*/}\n"
+
+if [ ! -d "./include/${PWD##*/}" ]
+then
+	mkdir -p "./include"
+	mkdir "./include/${PWD##*/}"
+	printf "Generated include directory, proceeding...\n"
+fi
+
+source rcpy 'hpp' './src' "./include/${PWD##*/}" 1>/dev/null
+
+printf "Successfully found and copied $count headers\n"
+
+
+

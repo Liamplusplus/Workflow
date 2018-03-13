@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Workflow - branch
+
+if [ -z $1 ]
+then
+	printf "${0##*/}: <name> ; Execute from inside project directory, creates branch titled <name>\n"
+else
+
+  branch=./src/$1
+  printf "Creating branch for $1\n"
+	if [ -d $branch ]; then
+		printf "branch already exists\n"
+	else
+		mkdir $branch
+	fi
+fi
+

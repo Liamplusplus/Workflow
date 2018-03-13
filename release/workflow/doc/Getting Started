@@ -1,0 +1,7 @@
+Now using workflow is very simple. Type "workflow" into the terminal for a summary of available commands.
+Once you use 'initcpp' to get your first project started, you can start interacting with the generated makefile.
+This file will automate most of the interaction between you and the compiler, however for any significant projects
+you must fill in a couple blanks under the 'User Config' section of the makefile. You can issue 'make help' to find 
+out more about interacting with make.
+
+Happy Coding.

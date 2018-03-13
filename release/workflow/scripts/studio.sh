@@ -1,0 +1,1 @@
+/home/liamplusplus/Programs/android-studio/bin/studio.sh

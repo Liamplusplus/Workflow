@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Workflow - initcpp
+# Note this function is recursive! Only run in project directory
+
+recursive_copy () {
+
+	# $1;  Desired extension (.hpp)
+	# $2; Target directory
+	# $3; Destination
+
+	if [ ! -d "$3" ] && [ ! -d "$2" ]; then
+		printf "Invalid directories for recursive copy\n"
+	else
+		for file in $2/*;
+		do
+			local filename=$(basename $file)
+			printf "Examining file $filename\n"
+			if [ -d "$file" ]; then
+				printf "$filename is a directory, "
+				destination=$3/$filename
+				if [ ! -d "$destination" ]; then
+					mkdir $destination
+				fi
+				printf "performing recursive copy on $destination\n"
+				recursive_copy $1 $file $destination
+			else
+				local extension="${filename##*.}"
+				if [ "$extension" = "$1" ]; then
+					let "count++"
+                    echo "cp -u $file $3"
+                    cp -u $file $3
+				fi
+			fi
+		done
+	fi
+}
+
+if [ "$#" -lt "3" ]
+then
+	printf '\n' "rcpy <ext> <target> <dest>\nRecursively copies all files with extension <ext> starting at <target>"
+	printf " to <dest>\n"
+else
+	printf "Commencing recursive copy for extension $1 starting at dir $2\n"
+	count=0
+	recursive_copy $1 $2 $3
+	export count
+fi

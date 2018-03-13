@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Workflow - install
+# Provides interface for installing/uninstalling libraries
+
+if [ -n "$(command -v "x86_64-w64-mingw32-g++")" ]
+then
+	choices="w64"
+fi
+
+if [ -n "$(command -v "x86_64-w64-mingw32-g++-win32")" ]
+then
+	choices=""$choices" w32"
+fi
+choices="[$choices]"
+
+choices="$choices default=native (recommended);  "
+
+if [ "$1" = "-x" ]
+then
+	printf "For which system architecture are you uninstalling? $choices"
+else
+	printf "For which system architecture are you installing? $choices"
+fi
+
+read choice
+
+if [ "$choice" = "w64" ]
+then
+	target="mingw64"
+elif [ "$choice" = "w32" ]
+then
+	target="mingw32"
+elif [ "$OS" = "Linux" ]
+then
+	target="gcc" # Native
+elif [ "$OS" = "Windows_NT" ]
+then
+	target="mingw32-w64"
+fi
+
+incdest="$WORKFLOW/include"
+inctarget="./include/${PWD##*/}"
+
+if [ "$target" = "gcc" ]
+then
+    mkdir -p "$WORKFLOW_LIB/C++/${PWD##*/}"
+	libdest="$WORKFLOW_LIB/C++/${PWD##*/}/$target"
+else
+	libdest="$WORKFLOW_LIB/C++/$target"
+fi
+
+libtarget="lib/$target"
+appdest="$WORKFLOW/bin"
+apptarget="bin/$target"
+
+printf "Are you using an isolated bin directory? (Must be in path for shell execution) [y/n]: default = no;  "
+read i
+if [ "$i" = "y" ]
+then 
+	appdest="$appdest/${PWD##*/}"
+fi
+
+if [ "$1" = "-x" ]; then
+	printf "Uninstalling ${PWD##*/} for platform $target\n"
+	rm -rf $incdest
+	rm -rf $libdest
+else
+	printf "Installing ${PWD##*/} for platform $target\n"
+	cp -ru $inctarget $incdest 2>/dev/null
+    
+    mkdir -p $libdest
+	cp -ru $libtarget/* $libdest
+	cp -u $apptarget/* $appdest 2>/dev/null
+    printf "Successful\n"
+fi
+
+

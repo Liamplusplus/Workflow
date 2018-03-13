@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Workflow - info
+# Tracks number of files, size of projects etc for easy management of work
+# -s size, -n number, -p <name>
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+then
+	printf "$(basename $0) [-s] or [-p <Project>]\n"
+	printf "Default behaviour is to list common desired information\n"
+	printf "Tracks total files and sizes for easy management of work\n"
+	exit
+fi
+
+if [ "$1" = "-p" ]
+then
+	dir=$WORKFLOW/projects/C++
+	#$2 - project
+	if [ -z "$2" ]
+	then
+		printf "$(du -h --max-depth=1 $dir | sort -hr)\n"
+		exit
+	fi
+
+	dir=$WORKFLOW/projects/C++/$2
+	 
+	if [ ! -d "$dir" ]
+	then
+		printf "$(basename $dir) is not a valid project\n"
+		exit
+	fi
+	size=$(du -hs $dir)
+	printf "Size of $(basename $dir)-> $(basename $size)\n"
+	nfiles=$(find $dir -type f -name '*' | wc -l)
+	printf "$(basename $dir) currently contains $nfiles files\n"
+else
+	printf "\n" 
+	#Libraries
+	for dir in $WORKFLOW/libraries/*;
+	do
+		nlib=$(find $dir -maxdepth 1 -type d -name '*' | wc -l)
+		let "nlib = $nlib - 3"
+		printf "Workflow contains $nlib libraries projects for ${dir##*/}\n\n"
+		for lib in $dir/*/gcc
+		do
+			nfile=$(find $lib -maxdepth 1 -type f -name '*' | wc -l)
+			printf "\t$(basename $(dirname $lib)) -> $nfile binaries\n"
+		done
+	done
+
+	nimp=$(find $WORKFLOW/include -maxdepth 1 -type d -name '*' | wc -l)
+	let "nimp = $nimp - 1"
+	printf "\n$nimp libraries have header implementations available\n\n"
+
+	#Scripts
+	nscriptd=$(find $WORKFLOW/scripts -maxdepth 1 -type d -name '*' | wc -l)
+	let "nscriptd = $nscriptd - 1"
+	nscript=$(find $WORKFLOW/scripts -maxdepth 1 -type f -name '*' | wc -l)
+	printf "Workflow contains $nscript scripts and $nscriptd script directories; \n\n"
+	for dir in $WORKFLOW/scripts/*
+	do
+		if [ -d "$dir" ]
+		then
+			n=$(find $dir -maxdepth 1 -type f -name '*' | wc -l)
+			printf "\t$(basename $dir)->$n scripts\n\n"
+		fi
+	done
+
+	#Binaries
+	nbind=$(find $WORKFLOW/bin -maxdepth 1 -type d -name '*' | wc -l)
+	let "nbind = $nbind - 2"
+	nbin=$(find $WORKFLOW/bin -maxdepth 1 -type f -name '*' | wc -l)
+	printf "Workflow contains $nbin binaries and $nbind applications;\n\n"
+	for dir in $WORKFLOW/bin/*
+	do
+		if [ -d "$dir" ]
+		then
+			n=$(find $dir -maxdepth 1 -type f -name '*' | wc -l)
+			printf "\t$(basename $dir)->$n binaries\n"
+		fi
+	done
+	printf "\n"
+fi
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+Roguelight Free Distribution Software License - Version 1.0 - Friday, 20th January 2017
+
+Permission is hereby granted, to any person or organization
+obtaining a copy of the software and accompanying documentation covered by
+this license (the "Software") to use, execute and distribute the Software, 
+and to prepare derivative works of the Software, and to permit third-parties
+to whom the Software is furnished to do so.
+
+This Software is protected by copyright law, and the owner of this software should
+not be misrepresented. If you use this software in a product, an acknowledgment
+in the product documentation would be appreciated but is not required.
+
+External libraries used by ***:
+
+***: Under the "" License

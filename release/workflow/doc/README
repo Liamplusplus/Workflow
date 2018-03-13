@@ -1,0 +1,42 @@
+Welcome to workflow,
+
+This is a lightweight program, designed for C++ developers who want to minimise
+redundant work, but still have the opportunity to learn about the details of how IDEs actually work.
+
+The general idea of Workflow is to focus on making every project created cross-platform, in the way users can use git to pull code
+on any operating system and modify and build the code for Linux or Windows.
+
+As it is open source, users can seek out the source code, and even modify or extend it to suit them.
+
+Here is a list of features that makes this IDE different from others:
+
+	- Very small download size; Tiny compared to more heavy IDEs. 83kB uncompressed!
+	- Customizable.
+	- Does not install files to any system directories such as /usr/* on Linux or System32 on windows.
+	- All files are kept under the one workflow directory, you can remove the whole IDE by deleting one folder.
+	
+By ignoring system directories and storing everything in workflow/ provides two benefits as follows:
+	
+	Keeps the users projects seperate from system programs, making it much easier to keep track of work.
+	Relying on system specific environment variables like LIBRARY_PATH on linux makes the build process less cross platform.
+
+Directory schema:
+
+bin: Binaries, a script is provided to put this in the PATH variables so programs may be executed from anywhere in a shell.
+
+config: All configuration files made by the user in one place. It's useful to have a back up of edited config files in case something goes wrong
+	or the user is on a new system.
+
+fonts: Self explanatory
+
+graphics: Resource directory
+
+include: Workflow will make sure your system searches this path for headers so there is no need to explicitly tell make
+
+licenses: Software licenses that workflow can fetch for any project a user may start.
+
+projects: Where one should start (and hopefully finish) all their projects.
+
+scripts: Scripts! Can be executed from any terminal :)
+    
+sounds: Audio files

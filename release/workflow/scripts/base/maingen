@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Workflow - maingen
+
+if [ -z "$1" ]
+then
+	printf "${0##*/}: <name> ; Execute from inside project directory, creates main template titled <name>\n"
+else
+	main="$WORKFLOW/config/templates/main.cpp"
+	printf "Is this template for a test program? [y/n]: default=no;  "
+	read t
+	if [ "$t" = "y" ]
+	then
+		target="src/test/$1.cpp"
+	else
+		target="src/main/$1.cpp"
+	fi
+	cp $main $target
+	printf "Copied $main to $target\n"
+fi
+	
+

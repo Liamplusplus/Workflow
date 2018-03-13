@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# Workflow - srcgen
+
+project=${PWD##*/}
+
+function srcgen 
+{	
+	if [ "$2" != "n" ]
+	then
+		ns=
+		local branch="$2/"
+	fi
+
+    printf "#include <$branch$1.hpp>\n\n\n" >> $3.cpp
+    printf "namespace $project { $ns\n\n" >> $3.cpp
+
+	if [ "$4" != "n" ]
+	then
+		printf "\t$1::$1()\n\t{\n\n\t}\n\n" >> $3.cpp
+		printf "\t$1::~$1()\n\t{\n\n\t}\n\n" >> $3.cpp
+	fi
+	
+	printf "}" >> $3.cpp
+
+	printf "Successfully generated source file at $3.cpp\n"
+}
+
+function intgen 
+{
+	if [ "$2" != "n" ]
+	then
+		ns=
+		local branch="$2/"
+	fi
+    
+	printf "/*\n *\n *\n */\n\n#pragma once\n\n" >> $3.hpp
+	printf "\nnamespace $project { $ns\n\n" >> $3.hpp
+
+	if [ "$4" != "n" ]
+	then
+		printf "\tclass $1\n\t{\n\t\tpublic:\n\n\t\t\t$1();\n\t\t\t~$1();\n\n\t};\n\n" >> $3.hpp
+	fi
+
+	printf "}" >> $3.hpp
+	printf "Successfully generated implementation file at $3.hpp\n"
+
+}
+
+if [[ -z "$1" ]]
+then
+    printf "${0##*/} <name>\n"
+else
+    printf "Branch? default=none; "
+    read b
+	if [ -z "$b" ] 
+	then
+		branch="n"
+	else
+		branch="$b"
+	fi
+
+    printf "Class? [y/n] default=true; "
+    read c
+	if [ -z "$c" ] 
+	then
+		class="y"
+	else
+		class=$c
+	fi
+
+    if [ "$branch" != "n" ]
+	then
+        if [ ! -d "src/$branch" ]
+		then
+            printf "Branch path src/$branch does not exist, exiting...\n"
+            exit
+        fi
+        dest="src/$branch/$1"
+    else
+        dest="src/$1"
+    fi
+    srcgen $1 $branch $dest $class # name - branch - path - class
+    intgen $1 $branch $dest $class # name - branch - path - class
+fi
+
+
+
+
+
