@@ -4,7 +4,10 @@
 #include <cstdlib>
 #include <string>
 #include <boost/filesystem.hpp>
+#include <ctk/math/Vec2.hpp>
+
 namespace bfs = boost::filesystem;
+using namespace ctk;
 
 namespace workflow {
 
@@ -18,9 +21,9 @@ namespace workflow {
         /* Window layout */
         dependancy_view = target;
 
-        dependancy_view->Resize(vec2f(0.333f, 0.5f));
-        module_view = target->subWindow(vec2f(0.333f, 0.5f), vec2f(0.3333f, 0.f));
-        class_view = target->subWindow(vec2f(0.333f, 0.5f), vec2f(0.6666f, 0.f));
+        //dependancy_view->Resize(vec2f(0.333f, 0.5f));
+        module_view = target->subWindow(Vec2f(0.333f, 0.5f), Vec2f(0.3333f, 0.f));
+        class_view = target->subWindow(Vec2f(0.333f, 0.5f), Vec2f(0.6666f, 0.f));
 
         dependancy_view->setTitle("Dependancies");
         module_view->setTitle("Modules");
@@ -29,7 +32,7 @@ namespace workflow {
 
         dependancy_list = new ScrollableMenu(dependancy_view);
         dependancy_list->setRange(10);
-        dependancy_list->setPosition(vec2f(0.1f, 0.1f));
+        dependancy_list->setPosition(0.1f, 0.1f);
         if (const char* libpath = std::getenv("WORKFLOW_LIB"))
         {
             std::string temp(libpath);
@@ -43,7 +46,7 @@ namespace workflow {
         }
         
         module_list = new ScrollableMenu(module_view);
-        module_list->setPosition(vec2f(0.1f, 0.1f));
+        module_list->setPosition(0.1f, 0.1f);
         std::string src = bfs::current_path().string();
         src += "/src";
         bfs::path src_path(src);

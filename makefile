@@ -19,10 +19,10 @@ comma :=,
 
 #*****************  User Config ********************************************
 
-MAIN := ctk
+MAIN := workflow
 
-LIBRARIES := boost 
-LIBFILES := $(DYNAMIC) -lboost_filesystem -lboost_system -Wl,--as-needed
+LIBRARIES := boost ctk ucurses
+LIBFILES := $(DYNAMIC) -lucurses -lctk -lboost_filesystem -lboost_system -Wl,--as-needed
 
 CXX := g++
 CXXFLAGS := -g -std=c++17 -O2 -flto
@@ -38,7 +38,7 @@ ifeq ($(OS),Linux)
 	LIBEXT := .so
 	OBJEXT := .o
 	LIBDIR := $(foreach l,$(LIBRARIES),-L$(WORKFLOW_LIB)/C++/$(l)/$(CXX))
-	TARGET := gcc
+	TARGET := Linux
 	ifeq ($(strip $(target)),)
 		CXXFLAGS += -fPIC
 	endif
