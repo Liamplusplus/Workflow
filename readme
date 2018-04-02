@@ -1,0 +1,2 @@
+Customize IDE originating from a Linux project designed to automate project building for Unix systems. 
+Solely utilizes makefile generation to quickly start and manage projects without worring about compilers or platform dependancies.

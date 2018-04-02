@@ -6,8 +6,9 @@
 
 #pragma once
 #include <fstream>
+#include "Project.hpp"
 
-namespace workflow { 
+namespace Workflow { 
 
     extern std::ofstream debug;
 	class Application
@@ -15,6 +16,5 @@ namespace workflow {
 		public:
 
             Application();
-
-	};
+};
 }

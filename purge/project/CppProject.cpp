@@ -9,7 +9,7 @@ namespace workflow { namespace project {
 
     CppProject::CppProject(string dir) : Project(dir) 
 	{
-        GlobalLogger::log(EXTERNAL) << "Constructing CppProject at destination: " << directory << " with name " << name << Sentinel::END;
+
 	}
 
     /*

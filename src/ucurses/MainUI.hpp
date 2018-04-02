@@ -3,29 +3,42 @@
  */
 
 #include <ucurses/ucurses.hpp>
+#include "ProjectView.hpp"
+#include "BuildView.hpp"
 
 using namespace ucurses;
 
-namespace workflow {
+namespace Workflow {
 
     class MainUI : public Interface
     {
-        public:
-
-            MainUI();
-
         protected:
 
+            // UCurses GUI setup
             void Initialize();
 
+            void RefreshClassList();
+            void RefreshDependancyList();
 
-            ScrollableMenu* dependancy_list;
-            ScrollableMenu* module_list;
-
+            Checklist* dependancy_list;
+            Checklist* module_list;
+            Checklist* class_list;
+            TextEntry* dependancy_entry;
+            Menu* entry_list;
             
             Window* dependancy_view;
             Window* module_view;
             Window* class_view;
+
+            Label* terminal_output;
+
+            void setupDependancyView();
+            void setupModuleView();
+            void setupClassView();
+            void setupTerminalOutput();
+
+            ProjectView project_view;
+            BuildView build_view;
 
     };
 
